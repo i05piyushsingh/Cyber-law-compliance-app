@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Environment & runtime logs
+*.log
+.env
+
+# System artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

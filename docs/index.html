@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#0067b8">
+  <meta name="description" content="Cyber Law, Risk and Compliance - MSc Forensic Science (Cyber Forensics) SEM III">
+  <title>Cyber Law, Risk and Compliance | MSc Forensic Science (Cyber Forensics) SEM III</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Continuous Scroll Progress Bar -->
+  <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+
+  <!-- Dedicated Institutional Login Page (NFSU Cyber Forensics Academic Portal) -->
+  <div class="auth-wrapper" id="auth-wrapper">
+    <!-- Top Bar with Institution Badge & Theme Switcher -->
+    <header class="auth-header">
+      <div class="auth-brand">
+        <div class="brand-icon" title="Cyber Law & Compliance Portal">
+          <span>⚖️</span>
+        </div>
+        <div class="auth-brand-text">
+          <span class="auth-univ-title">National Forensic Sciences University</span>
+          <span class="auth-dept-sub">MSc Forensic Science (Cyber Forensics) SEM III</span>
+        </div>
+      </div>
+      <div class="auth-header-actions">
+        <button class="header-btn" id="auth-theme-toggle-btn" title="Toggle Light/Dark Theme">
+          <span>🌙 Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Auth Card Container -->
+    <div class="auth-card-container">
+      <div class="auth-card">
+        <!-- Auth Card Header -->
+        <div class="auth-card-top">
+          <div class="auth-badge-row">
+            <span class="auth-badge-chip">MSc Forensic Science (Cyber Forensics) SEM III</span>
+            <span class="auth-badge-chip sec-chip">🔒 IT Act 2000 Compliant</span>
+          </div>
+          <h2 class="auth-title">Cyber Law, Risk and Compliance</h2>
+          <p class="auth-subtitle">Academic & Compliance Assessment Portal • MSc Forensic Science (Cyber Forensics) SEM III</p>
+        </div>
+
+        <!-- Quick Demo Profiles for Student and Professor -->
+        <div class="demo-profiles-box">
+          <span class="demo-box-label">⚡ Select Login Role:</span>
+          <div class="demo-buttons-grid">
+            <button type="button" class="demo-btn active" data-profile="student" id="demo-student-btn" title="Sign in as Student">
+              <span class="demo-avatar">🎓</span>
+              <div class="demo-info">
+                <strong>Student</strong>
+                <small>MSc Cyber Forensics SEM III</small>
+              </div>
+            </button>
+            <button type="button" class="demo-btn" data-profile="professor" id="demo-professor-btn" title="Sign in as Professor">
+              <span class="demo-avatar">👨‍🏫</span>
+              <div class="demo-info">
+                <strong>Professor</strong>
+                <small>Course Faculty & Evaluator</small>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Institutional Credentials Notice Banner -->
+        <div class="auth-cred-banner">
+          <div class="acb-title">🔑 Institutional Login Credentials:</div>
+          <div class="acb-tags">
+            <span class="acb-tag">Username: <strong>Admin</strong></span>
+            <span class="acb-tag">Password: <strong>Admin@123</strong></span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="auth-divider">
+          <span>sign in with authorized credentials</span>
+        </div>
+
+        <!-- Login Form -->
+        <form class="auth-form" id="login-form" autocomplete="on">
+          <div class="form-group">
+            <label for="login-username" class="form-label">
+              <span>Username</span>
+              <span class="form-hint">(Authorized: Admin)</span>
+            </label>
+            <div class="input-group">
+              <span class="input-icon">👤</span>
+              <input type="text" id="login-username" class="fluent-input" placeholder="Admin" required autocomplete="username" value="Admin">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="login-password" class="form-label">
+                <span>Password</span>
+                <span class="form-hint">(Authorized: Admin@123)</span>
+              </label>
+              <a href="#" class="forgot-link" id="forgot-password-link">Credential Info</a>
+            </div>
+            <div class="input-group">
+              <span class="input-icon">🔑</span>
+              <input type="password" id="login-password" class="fluent-input" placeholder="Admin@123" required autocomplete="current-password" value="Admin@123">
+              <button type="button" class="btn-toggle-pw" id="toggle-password-btn" title="Show or hide password" aria-label="Toggle password visibility">
+                <span id="pw-toggle-icon">👁️</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="fluent-checkbox-label">
+              <input type="checkbox" id="remember-me-checkbox" checked>
+              <span class="custom-checkbox"></span>
+              <span class="checkbox-text">Keep me signed in on this workstation</span>
+            </label>
+          </div>
+
+          <!-- Alert / Error message container -->
+          <div class="auth-alert" id="auth-alert" style="display: none;"></div>
+
+          <!-- Sign In Submit Button -->
+          <button type="submit" class="btn-fluent-submit" id="login-submit-btn">
+            <span class="btn-text">Sign In to Academic Portal</span>
+            <span class="btn-arrow">→</span>
+            <span class="btn-spinner" id="login-spinner" style="display: none;"></span>
+          </button>
+
+          <!-- Add User Section Trigger on Login Card -->
+          <div class="auth-extra-actions">
+            <button type="button" class="btn-register-trigger" id="btn-open-register-modal">
+              <span>➕ Add New User to Database</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Compliance & Security Notice Banner -->
+        <div class="auth-compliance-footer">
+          <div class="acf-icon">🛡️</div>
+          <div class="acf-text">
+            <strong>Statutory Compliance & Monitoring Notice:</strong>
+            <p>Access restricted to authorized Students and Professors of MSc Forensic Science (Cyber Forensics) SEM III. Governed by Sections 43 & 66 of the Information Technology Act 2000.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Info / Syllabus Scheme Card on Side -->
+      <div class="auth-side-card">
+        <div class="asc-header">
+          <h3>📘 Course Information</h3>
+          <span class="asc-code">SEM III</span>
+        </div>
+        <p class="asc-desc">National Forensic Sciences University • MSc Forensic Science (Cyber Forensics) SEM III.</p>
+        
+        <div class="asc-units-list">
+          <div class="asc-unit-item">
+            <span class="aui-num">Unit I</span>
+            <div class="aui-meta">
+              <strong>IT Security Assessment & Audit</strong>
+              <small>15 Hours • Governance, CAATs, Lifecycles</small>
+            </div>
+          </div>
+          <div class="asc-unit-item">
+            <span class="aui-num">Unit II</span>
+            <div class="aui-meta">
+              <strong>IT Infrastructure & 7 Domains</strong>
+              <small>15 Hours • Martin M. Weiss & Solomon Framework</small>
+            </div>
+          </div>
+          <div class="asc-unit-item">
+            <span class="aui-num">Unit III</span>
+            <div class="aui-meta">
+              <strong>Risk Management & BIA</strong>
+              <small>15 Hours • Quantitative SLE/ALE, DRP</small>
+            </div>
+          </div>
+          <div class="asc-unit-item">
+            <span class="aui-num">Unit IV</span>
+            <div class="aui-meta">
+              <strong>Indian Cyber Law & Global Compliance</strong>
+              <small>15 Hours • IT Act 2000, DPDP 2023, GDPR</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="asc-scheme-bar">
+          <div class="asb-item">
+            <strong>200 Marks</strong>
+            <span>Theory (100 UE + 50 IA + 50 MSE)</span>
+          </div>
+          <div class="asb-item">
+            <strong>100 Marks</strong>
+            <span>LPW Practical Lab</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <div id="app-container">
+    <!-- Sidebar Component (Requirement 2a: Lists all units as clickable sections) -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon" title="Cyber Law & Compliance Portal">
+          <span>⚖️</span>
+        </div>
+        <div class="brand-info">
+          <h1>Cyber Law & Compliance</h1>
+          <span>MSc Forensic Science (Cyber Forensics) SEM III</span>
+        </div>
+        <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close navigation sidebar">&times;</button>
+      </div>
+
+      <!-- Sidebar Progress Tracker Widget -->
+      <div class="sidebar-progress-widget" id="sidebar-progress-widget">
+        <div class="sp-header">
+          <span class="sp-title">Syllabus Covered</span>
+          <span class="sp-percent" id="sidebar-progress-percent">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="sidebar-progress-fill" style="width: 0%"></div>
+        </div>
+        <div class="sp-footer">
+          <span id="sidebar-progress-count">0 of 30 Topics Mastered</span>
+          <button class="sp-reset-link" id="reset-progress-link" title="Reset all topic checkmarks">Reset</button>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Injected dynamically via app.js -->
+      </nav>
+
+      <div class="sidebar-footer">
+        <!-- Authenticated User Status Widget -->
+        <div class="sidebar-user-card" id="sidebar-user-card">
+          <div class="suc-top">
+            <span class="suc-avatar" id="sidebar-user-avatar">🎓</span>
+            <div class="suc-info">
+              <strong id="sidebar-user-name">Student</strong>
+              <span id="sidebar-user-role">MSc Forensic Science (Cyber Forensics) SEM III</span>
+            </div>
+          </div>
+          <button class="suc-logout-btn" id="sidebar-signout-btn" title="Sign out of academic session">Sign Out</button>
+        </div>
+
+        <div class="university-tag">National Forensic Sciences University</div>
+        <div>MSc Forensic Science (Cyber Forensics) SEM III</div>
+        <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">Localhost Academic Portal • v1.0.0</div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <!-- Top Header Navigation Bar -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Navigation Menu">☰</button>
+          <div class="breadcrumbs">
+            <span>Syllabus</span>
+            <span>›</span>
+            <span class="current" id="breadcrumb-current">Unit I: IT Security Assessment & Audit</span>
+          </div>
+        </div>
+
+        <!-- Header Center Progress Tracker -->
+        <div class="header-progress-wrap" id="header-progress-wrap" title="Overall syllabus coverage">
+          <div class="progress-info-row">
+            <span class="progress-label">Syllabus Covered</span>
+            <span class="progress-stats" id="header-progress-stats">0 / 30 (0%)</span>
+          </div>
+          <div class="progress-track header-track">
+            <div class="progress-fill" id="header-progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Global Search Input -->
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="global-search" placeholder="Search topics, laws, tools..." aria-label="Search syllabus topics">
+          </div>
+
+          <!-- Print / Export Study Notes -->
+          <button class="header-btn" id="print-notes-btn" title="Print or save notes as PDF">
+            <span>🖨️ Export</span>
+          </button>
+
+          <!-- Light/Dark Mode Switcher -->
+          <button class="header-btn" id="theme-toggle-btn" title="Toggle Light/Dark Theme">
+            <span>☀️ Light</span>
+          </button>
+
+          <!-- Active User Session Profile & Sign Out Button -->
+          <div class="user-profile-badge" id="header-user-badge" title="Active authenticated session">
+            <span class="user-avatar" id="header-user-avatar">🎓</span>
+            <div class="user-meta">
+              <span class="user-name" id="header-user-name">Student</span>
+              <span class="user-role" id="header-user-role">MSc Cyber Forensics SEM III</span>
+            </div>
+            <button class="header-signout-btn" id="header-signout-btn" title="Sign out of academic portal">
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Component (Requirement 2b: Displays splash cards summarizing key topics) -->
+      <section class="content-viewport" id="content-viewport">
+        <!-- Rendered dynamically by app.js based on selected unit/tool -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Deep Dive Academic Notes & Quick Quiz Modal -->
+  <div class="modal-backdrop" id="deep-dive-modal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="modal-title">Topic Title</h3>
+          <p id="modal-subtitle">Unit Subtitle</p>
+        </div>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close Modal">&times;</button>
+      </div>
+
+      <div class="modal-body" id="modal-content">
+        <!-- Deep dive markdown & quiz rendered here -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="card-btn mark-complete-btn" id="modal-complete-toggle-btn">
+          <span id="modal-complete-btn-text">⚪ Mark as Studied</span>
+        </button>
+        <button class="header-btn" onclick="window.print()">
+          <span>🖨️ Print Topic</span>
+        </button>
+        <button class="header-btn primary" onclick="document.getElementById('deep-dive-modal').classList.remove('open')">
+          <span>Done / Close</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forgot Password / IT Cell Assistance Modal -->
+  <div class="modal-backdrop" id="auth-help-modal" role="dialog" aria-modal="true">
+    <div class="modal-dialog auth-help-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>NFSU IT Helpdesk & Credential Support</h3>
+          <p>Institutional Authentication & Academic Access</p>
+        </div>
+        <button class="modal-close-btn" id="auth-help-close-btn" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="help-box">
+          <h4>🔑 Academic Access Notice</h4>
+          <p>Institutional login credentials for the <strong>Cyber Law, Risk and Compliance</strong> course portal (MSc Forensic Science (Cyber Forensics) SEM III) are configured for Student and Professor roles.</p>
+          <div class="help-credentials-list">
+            <div class="hc-item">
+              <strong>⚡ Authorized Login Roles:</strong>
+              <p>Select either <strong>Student</strong> or <strong>Professor</strong> from the login card.</p>
+            </div>
+            <div class="hc-item">
+              <strong>🔑 System Access Credentials:</strong>
+              <p>Username: <code>Admin</code> &nbsp;|&nbsp; Password: <code>Admin@123</code></p>
+            </div>
+            <div class="hc-item">
+              <strong>🏛️ Institutional IT Cell:</strong>
+              <p>Email: <code>it-support@nfsu.ac.in</code> • Phone: 079-23977100 • Sector 9, Gandhinagar Campus</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="header-btn primary" id="auth-help-ok-btn">Understood / Return to Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal to Add New User to Database -->
+  <div class="modal-backdrop" id="register-user-modal" role="dialog" aria-modal="true">
+    <div class="modal-dialog add-user-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>➕ Add New User to Database</h3>
+          <p>MSc Forensic Science (Cyber Forensics) SEM III • Institutional Access</p>
+        </div>
+        <button class="modal-close-btn" id="register-close-btn" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="sqli-shield-badge">
+          <span class="sqli-shield-icon">🛡️</span>
+          <span>Client SQLi Filter & Input Sanitization Active (IT Act Sec 66 Compliant)</span>
+        </div>
+        <form id="register-user-form" class="auth-form">
+          <div class="form-group">
+            <label for="reg-fullname" class="form-label">Full Name</label>
+            <div class="input-group">
+              <span class="input-icon">👤</span>
+              <input type="text" id="reg-fullname" class="fluent-input" placeholder="e.g., Ananya Sharma" required>
+            </div>
+          </div>
+
+          <div class="form-row-2col">
+            <div class="form-group">
+              <label for="reg-username" class="form-label">Username</label>
+              <div class="input-group">
+                <span class="input-icon">🆔</span>
+                <input type="text" id="reg-username" class="fluent-input" placeholder="e.g., ananya.cf" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reg-role" class="form-label">Role</label>
+              <select id="reg-role" class="fluent-select" required>
+                <option value="Student">🎓 Student</option>
+                <option value="Professor">👨‍🏫 Professor</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2col">
+            <div class="form-group">
+              <label for="reg-password" class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-icon">🔑</span>
+                <input type="password" id="reg-password" class="fluent-input" placeholder="Create password" required>
+                <button type="button" class="btn-toggle-pw" id="reg-toggle-pw-btn" title="Toggle password visibility">
+                  <span id="reg-pw-icon">👁️</span>
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reg-id" class="form-label">Roll No. / Faculty ID</label>
+              <div class="input-group">
+                <span class="input-icon">📋</span>
+                <input type="text" id="reg-id" class="fluent-input" placeholder="e.g., NFSU-FS-2024-089">
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-alert" id="reg-alert" style="display: none;"></div>
+
+          <div class="modal-actions-row">
+            <button type="button" class="header-btn" id="reg-cancel-btn">Cancel</button>
+            <button type="submit" class="btn-fluent-submit" id="reg-submit-btn">
+              <span>Save User to Database →</span>
+              <span class="btn-spinner" id="reg-spinner" style="display: none;"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/syllabus-data.js"></script>
+  <script src="js/quiz-data.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

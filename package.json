@@ -1,0 +1,20 @@
+{
+  "name": "cyber-law-risk-compliance-app",
+  "version": "1.0.0",
+  "description": "Interactive Web Application for Cyber Law, Risk and Compliance Syllabus (NFSU M.Sc. Cyber Forensics)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "cyber-law",
+    "risk-management",
+    "compliance",
+    "it-audit",
+    "nfsu",
+    "iso27001",
+    "it-act-2000"
+  ],
+  "author": "National Forensic Sciences University Student Project",
+  "license": "MIT"
+}
