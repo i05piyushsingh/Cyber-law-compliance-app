@@ -1,6 +1,6 @@
 # Cyber Law, Risk and Compliance - Web Application
 
-**Course:** Cyber Law, Risk and Compliance (Course Code: `FSMS23 SIII SP-V P1`)  
+**Course:** Cyber Law, Risk and Compliance (Course Code: `FSMS26 SIII SP-V P1`)  
 **Program:** MSc Forensic Science (Cyber Forensics) SEM III  
 **Institution:** School of Forensic Science, National Forensic Sciences University (NFSU)  
 **Design System:** Microsoft Official Design System (Fluent 2 UI & `microsoft.com` palette)  
