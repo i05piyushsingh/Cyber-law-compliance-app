@@ -1,6 +1,6 @@
 /**
  * Local HTTP Server for Cyber Law, Risk & Compliance Web Application
- * NFSU M.Sc. Forensic Science (Cyber Forensics) - FSMS23 SIII SP-V P1
+ * NFSU M.Sc. Forensic Science (Cyber Forensics) - FSMS26 SIII SP-V P1
  */
 
 const http = require('http');
@@ -125,7 +125,7 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
       course: 'Cyber Law, Risk and Compliance',
-      courseCode: 'FSMS23 SIII SP-V P1',
+      courseCode: 'FSMS26 SIII SP-V P1',
       institution: 'National Forensic Sciences University (NFSU)',
       program: 'MSc Forensic Science (Cyber Forensics) SEM III',
       status: 'online',
@@ -358,7 +358,7 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`================================================================`);
   console.log(`  Cyber Law, Risk and Compliance - Web Application`);
-  console.log(`  Course: FSMS23 SIII SP-V P1 (NFSU M.Sc. Cyber Forensics)`);
+  console.log(`  Course: FSMS26 SIII SP-V P1 (NFSU M.Sc. Cyber Forensics)`);
   console.log(`  Application is running locally at:`);
   console.log(`  -> http://localhost:${PORT}`);
   console.log(`================================================================`);

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "NFSU-STU-042",
+    "name": "Student",
+    "username": "Admin",
+    "role": "Student",
+    "roleDescription": "MSc Forensic Science (Cyber Forensics) SEM III",
+    "email": "student@nfsu.ac.in",
+    "avatar": "🎓",
+    "password": "Admin@123",
+    "createdAt": "2026-11-23T07:14:36.529Z"
+  },
+  {
+    "id": "NFSU-PROF-108",
+    "name": "Professor",
+    "username": "Professor",
+    "role": "Professor",
+    "roleDescription": "Course Faculty & Evaluator",
+    "email": "professor@nfsu.ac.in",
+    "avatar": "👨‍🏫",
+    "password": "Admin@123",
+    "createdAt": "2026-11-23T07:14:36.530Z"
+  },
+  {
+    "id": "FSMS23-018",
+    "name": "Ananya Sharma",
+    "username": "ananya.s",
+    "role": "Student",
+    "roleDescription": "MSc Forensic Science (Cyber Forensics) SEM III",
+    "email": "ananya.s@nfsu.ac.in",
+    "avatar": "🎓",
+    "password": "Student@123",
+    "createdAt": "2026-11-23T07:16:29.100Z"
+  },
+  {
+    "id": "FSMS23-025",
+    "name": "Vikramaditya Roy",
+    "username": "vikram.roy",
+    "role": "Student",
+    "roleDescription": "MSc Forensic Science (Cyber Forensics) SEM III",
+    "email": "vikram.roy@nfsu.ac.in",
+    "avatar": "🎓",
+    "password": "Roy@123",
+    "createdAt": "2026-11-23T07:19:32.762Z"
+  }
+]

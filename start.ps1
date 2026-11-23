@@ -2,7 +2,7 @@
 Write-Host "====================================================================" -ForegroundColor Cyan
 Write-Host " Starting Cyber Law, Risk and Compliance Web Application..." -ForegroundColor Yellow
 Write-Host " National Forensic Sciences University (NFSU) - M.Sc. Cyber Forensics" -ForegroundColor Green
-Write-Host " Course Code: FSMS23 SIII SP-V P1" -ForegroundColor Green
+Write-Host " Course Code: FSMS26 SIII SP-V P1" -ForegroundColor Green
 Write-Host "====================================================================" -ForegroundColor Cyan
 Write-Host ""
 

@@ -1,6 +1,6 @@
 /**
  * Academic Course Data for Cyber Law, Risk and Compliance
- * Course Code: FSMS23 SIII SP-V P1
+ * Course Code: FSMS26 SIII SP-V P1
  * National Forensic Sciences University (NFSU), School of Forensic Science
  * Specialization - V (Cyber Forensics)
  */
@@ -8,7 +8,7 @@
 const SYLLABUS_DATA = {
   courseInfo: {
     title: "Cyber Law, Risk and Compliance",
-    code: "FSMS23 SIII SP-V P1",
+    code: "FSMS26 SIII SP-V P1",
     institution: "National Forensic Sciences University (NFSU)",
     department: "School of Forensic Science",
     program: "MSc Forensic Science (Cyber Forensics) SEM III",
@@ -25,7 +25,7 @@ const SYLLABUS_DATA = {
         totalMarks: 200
       },
       practicalLab: {
-        courseCode: "FSMS23 SIII SP-V LC: LABORATORY COURSE",
+        courseCode: "FSMS26 SIII SP-V LC: LABORATORY COURSE",
         credits: 6,
         internalMSE: 50,
         universityLPW: 100,
@@ -1421,7 +1421,7 @@ Developed by Microsoft, STRIDE categorizes threat vectors against security objec
   ],
 
   practicals: {
-    courseCode: "FSMS23 SIII SP-V LC: LABORATORY COURSE (P1: Cyber Law, Risk and Compliance)",
+    courseCode: "FSMS26 SIII SP-V LC: LABORATORY COURSE (P1: Cyber Law, Risk and Compliance)",
     title: "Practical Laboratory Curriculum",
     hours: "Lab Exercises",
     experiments: [

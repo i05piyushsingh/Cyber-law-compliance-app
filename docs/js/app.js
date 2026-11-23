@@ -2342,7 +2342,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="user-db-banner">
           <h2>NFSU User Database & Access Control Management</h2>
           <p>
-            Centralized administrative directory for Course FSMS23 SIII SP-V P1. All users registered below or at the login screen 
+            Centralized administrative directory for Course FSMS26 SIII SP-V P1. All users registered below or at the login screen 
             are permanently recorded in <code>data/users.json</code> and grant immediate authentication privileges.
           </p>
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">

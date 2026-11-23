@@ -263,7 +263,7 @@ cyber-law-compliance-app/
 - **Institution:** National Forensic Sciences University (NFSU), Gandhinagar
 - **School:** School of Forensic Science
 - **Program:** MSc Forensic Science (Cyber Forensics) SEM III
-- **Course Code:** FSMS23 SIII SP-V P1
+- **Course Code:** FSMS26 SIII SP-V P1
 - **Credits:** 4 Credits (60 Teaching Hours)
 - **Examination Scheme:**
   - Internal Continuous Assessment (TA-1 & TA-2): 50 Marks
