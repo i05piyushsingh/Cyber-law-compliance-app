@@ -80,6 +80,65 @@ A dedicated administrative and access control section is built into the applicat
 
 ---
 
+## 🌐 Deploy & Run Live on the Internet
+
+This repository is pre-configured to be **100% operational on the Internet** across multiple free platforms:
+
+### 🌟 Method 1: GitHub Pages (Free, Automatic & Zero-Setup)
+The project includes both an automated GitHub Actions deployment workflow (`.github/workflows/deploy.yml`) and a pre-built `/docs` static bundle.
+1. Push this repository to GitHub.
+2. In your GitHub repository, navigate to **Settings** → **Pages** (in the left navigation).
+3. Under **Build and deployment** > **Source**:
+   * Select **GitHub Actions** (the site will automatically build and publish via `.github/workflows/deploy.yml`).
+   * *OR* select **Deploy from a branch** → choose branch `main` → folder `/docs` → click **Save**.
+4. Your application will be live at:
+   ```
+   https://<your-username>.github.io/<your-repo-name>/
+   ```
+*Note: On GitHub Pages (static hosting), user registration, duplicate prevention, and per-user progress tracking run seamlessly via client-side persistent storage (`localStorage`).*
+
+### ⚡ Method 2: 1-Click Cloud Deployment with Live REST API (Render.com)
+To run with full Node.js backend disk storage (`data/users.json`) on the internet:
+1. Create a free account at [Render.com](https://render.com).
+2. Click **New +** → **Web Service** → Connect your GitHub repository.
+3. Render automatically detects `render.yaml` with zero configuration!
+4. Click **Create Web Service**. Your app is live at:
+   ```
+   https://<your-app-name>.onrender.com
+   ```
+
+### ☁️ Method 3: Vercel Deployment
+1. Connect your repository to [Vercel](https://vercel.com).
+2. Vercel automatically reads `vercel.json`.
+3. Click **Deploy** to receive an instant production URL (`https://<your-app>.vercel.app`).
+
+---
+
+## 📤 How to Push this Project to Your GitHub
+
+### Option A: Using the Automated 1-Click Push Script
+1. Create a new empty repository on [GitHub](https://github.com/new) (e.g. `cyber-law-compliance-app`). Do not initialize with README.
+2. Run the helper script in the project root:
+   * **Windows Batch:** Double-click `push-to-github.bat` and paste your GitHub repository URL when prompted.
+   * **PowerShell:** Run:
+     ```powershell
+     .\push-to-github.ps1 -RepoUrl "https://github.com/<YOUR-USERNAME>/<YOUR-REPO>.git"
+     ```
+
+### Option B: Manual Git Commands
+```bash
+# 1. Add your GitHub remote repository URL
+git remote add origin https://github.com/<YOUR-USERNAME>/<YOUR-REPO>.git
+
+# 2. Ensure main branch is active
+git branch -M main
+
+# 3. Push all code to GitHub
+git push -u origin main
+```
+
+---
+
 ## 🚀 How to Run Locally
 
 ### Prerequisites
