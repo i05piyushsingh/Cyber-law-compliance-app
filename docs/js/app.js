@@ -62,6 +62,28 @@ document.addEventListener('DOMContentLoaded', () => {
       avatar: "👨‍🏫",
       password: "Admin@123",
       createdAt: "2026-11-23T00:00:00.000Z"
+    },
+    {
+      id: "FSMS26-018",
+      name: "Ananya Sharma",
+      username: "ananya.s",
+      role: "Student",
+      roleDescription: "MSc Forensic Science (Cyber Forensics) SEM III",
+      email: "ananya.s@nfsu.ac.in",
+      avatar: "🎓",
+      password: "Student@123",
+      createdAt: "2026-11-23T07:16:29.100Z"
+    },
+    {
+      id: "FSMS26-025",
+      name: "Vikramaditya Roy",
+      username: "vikram.roy",
+      role: "Student",
+      roleDescription: "MSc Forensic Science (Cyber Forensics) SEM III",
+      email: "vikram.roy@nfsu.ac.in",
+      avatar: "🎓",
+      password: "Roy@123",
+      createdAt: "2026-11-23T07:19:32.762Z"
     }
   ];
 
@@ -409,14 +431,53 @@ document.addEventListener('DOMContentLoaded', () => {
     hideAuthAlert();
   }
 
+  // Environment Detector: Static Hosting (GitHub Pages, GitLab Pages, etc.) vs Live Node.js Backend
+  function isStaticEnvironment() {
+    return (
+      window.location.protocol === 'file:' ||
+      window.location.hostname.endsWith('github.io') ||
+      window.location.hostname.endsWith('gitlab.io') ||
+      window.location.hostname.endsWith('pages.dev') ||
+      window.location.hostname.includes('github.io')
+    );
+  }
+
   // Sync Users with Backend API (data/users.json) and Local Storage
   async function syncUsersFromBackend() {
+    if (isStaticEnvironment()) {
+      // In static hosting environments like GitHub Pages, users persist directly in localStorage
+      const stored = localStorage.getItem('cyber_user_database');
+      if (!stored) {
+        try {
+          const res = await fetch('data/users.json');
+          if (res.ok) {
+            const staticUsers = await res.json();
+            if (Array.isArray(staticUsers) && staticUsers.length > 0) {
+              userDatabase = staticUsers;
+              localStorage.setItem('cyber_user_database', JSON.stringify(userDatabase));
+            }
+          }
+        } catch (_) {
+          localStorage.setItem('cyber_user_database', JSON.stringify(userDatabase));
+        }
+      }
+      updateNavUserBadge();
+      return;
+    }
+
     try {
       const res = await fetch('/api/users');
       if (res.ok) {
         const data = await res.json();
         if (data.users && Array.isArray(data.users) && data.users.length > 0) {
-          userDatabase = data.users;
+          const merged = [...data.users];
+          const localUsers = JSON.parse(localStorage.getItem('cyber_user_database') || '[]');
+          for (const lu of localUsers) {
+            if (!merged.some(u => (u.username || '').toLowerCase() === (lu.username || '').toLowerCase())) {
+              merged.push(lu);
+            }
+          }
+          userDatabase = merged;
           localStorage.setItem('cyber_user_database', JSON.stringify(userDatabase));
           updateNavUserBadge();
         }
@@ -608,7 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function addUserToDatabase(userData) {
-    // 1. Defense-in-depth: Run client SQLi filter before sending request
+    // 1. Defense-in-depth: Run client SQLi filter before processing
     const clientValidation = validateUserInputFields(userData);
     if (!clientValidation.valid) {
       return { success: false, message: clientValidation.message };
@@ -620,6 +681,35 @@ document.addEventListener('DOMContentLoaded', () => {
       return { success: false, message: dupCheck.message };
     }
 
+    const saveLocally = () => {
+      const exists = userDatabase.some(u => (u.username || '').toLowerCase() === userData.username.trim().toLowerCase());
+      if (exists) {
+        return { success: false, message: `Username '${userData.username}' already exists in database.` };
+      }
+      const newUser = {
+        id: userData.id && userData.id.trim() ? userData.id.trim() : ('NFSU-' + (userData.role === 'Professor' ? 'FAC-' : 'STU-') + Math.floor(100 + Math.random() * 900)),
+        name: userData.name.trim(),
+        username: userData.username.trim(),
+        role: userData.role,
+        roleDescription: userData.role === 'Professor' ? 'Course Faculty & Evaluator' : 'MSc Forensic Science (Cyber Forensics) SEM III',
+        email: userData.email && userData.email.trim() ? userData.email.trim() : `${userData.username.trim().toLowerCase()}@nfsu.ac.in`,
+        avatar: userData.role === 'Professor' ? '👨‍🏫' : '🎓',
+        password: userData.password.trim(),
+        createdAt: new Date().toISOString()
+      };
+      userDatabase.push(newUser);
+      localStorage.setItem('cyber_user_database', JSON.stringify(userDatabase));
+      updateNavUserBadge();
+      return { success: true, user: newUser, message: `User '${newUser.name}' (@${newUser.username}) saved successfully to database!` };
+    };
+
+    // Static Hosting Environment (GitHub Pages / GitLab Pages / static CDN):
+    // Save directly to browser localStorage without sending failing POST requests to static CDNs.
+    if (isStaticEnvironment()) {
+      return saveLocally();
+    }
+
+    // Live Node.js backend server environment:
     try {
       const res = await fetch('/api/users', {
         method: 'POST',
@@ -633,33 +723,16 @@ document.addEventListener('DOMContentLoaded', () => {
         updateNavUserBadge();
         return { success: true, user: data.user, message: data.message };
       }
-      if (res.status === 404) {
-        // Static hosting fallback (e.g., GitHub Pages)
-        throw new Error('Static hosting detected');
+      // Check if server sent a structured JSON response (e.g. 400 validation error, 409 conflict)
+      const data = await res.json().catch(() => null);
+      if (data && data.message) {
+        return { success: false, message: data.message };
       }
-      const data = await res.json().catch(() => ({}));
-      return { success: false, message: data.message || 'Error saving user' };
+      // If server returned HTML error or 404/405/502/503, fallback to local storage
+      return saveLocally();
     } catch (err) {
-      // Local fallback (offline or GitHub Pages)
-      const exists = userDatabase.some(u => u.username.toLowerCase() === userData.username.trim().toLowerCase());
-      if (exists) {
-        return { success: false, message: `Username '${userData.username}' already exists in database.` };
-      }
-      const newUser = {
-        id: userData.id && userData.id.trim() ? userData.id.trim() : ('NFSU-' + (userData.role === 'Professor' ? 'FAC-' : 'STU-') + Math.floor(100 + Math.random() * 900)),
-        name: userData.name.trim(),
-        username: userData.username.trim(),
-        role: userData.role,
-        roleDescription: userData.role === 'Professor' ? 'Course Faculty & Evaluator' : 'MSc Forensic Science (Cyber Forensics) SEM III',
-        email: userData.email || `${userData.username.trim().toLowerCase()}@nfsu.ac.in`,
-        avatar: userData.role === 'Professor' ? '👨‍🏫' : '🎓',
-        password: userData.password.trim(),
-        createdAt: new Date().toISOString()
-      };
-      userDatabase.push(newUser);
-      localStorage.setItem('cyber_user_database', JSON.stringify(userDatabase));
-      updateNavUserBadge();
-      return { success: true, user: newUser, message: `User '${newUser.name}' saved to database!` };
+      // Network error or backend offline: save locally
+      return saveLocally();
     }
   }
 
@@ -672,14 +745,16 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     }
 
-    try {
-      await fetch('/api/users/delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username })
-      });
-    } catch (e) {
-      console.warn('Backend delete fallback:', e);
+    if (!isStaticEnvironment()) {
+      try {
+        await fetch('/api/users/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username })
+        });
+      } catch (e) {
+        console.warn('Backend delete fallback:', e);
+      }
     }
 
     userDatabase = userDatabase.filter(u => u.username.toLowerCase() !== username.toLowerCase());
@@ -860,14 +935,14 @@ document.addEventListener('DOMContentLoaded', () => {
           regAlert.style.display = 'flex';
         }
 
+        // Align selected role indicator
+        currentSelectedRole = role === 'Professor' ? 'professor' : 'student';
+        if (demoStudentBtn) demoStudentBtn.classList.toggle('active', currentSelectedRole === 'student');
+        if (demoProfessorBtn) demoProfessorBtn.classList.toggle('active', currentSelectedRole === 'professor');
+
         // Auto-fill login form with new user's credentials!
         if (loginUsername) loginUsername.value = username;
         if (loginPassword) loginPassword.value = password;
-        if (role === 'Professor') {
-          setDemoProfile('professor');
-        } else {
-          setDemoProfile('student');
-        }
 
         setTimeout(() => {
           closeRegisterModal();
@@ -2348,7 +2423,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">
             <div class="user-db-sync-chip">
               <span class="status-indicator-dot online"></span>
-              <span>Persistent Disk Storage Synced: <code>data/users.json</code></span>
+              <span>${isStaticEnvironment() ? 'Browser Storage Persistent: localStorage (Active)' : 'Persistent Disk Storage Synced: data/users.json'}</span>
             </div>
             <div class="user-db-sync-chip" style="background: rgba(0, 103, 184, 0.08); color: var(--accent-blue); border-color: rgba(0, 103, 184, 0.25);">
               <span>🛡️ Client SQLi Filter: Enforced</span>
@@ -2434,7 +2509,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="form-row-2col">
               <div class="fluent-form-group">
                 <label for="p-id">Roll No. / Faculty ID <span class="optional-tag">(Optional)</span></label>
-                <input type="text" id="p-id" class="fluent-input" placeholder="e.g. FSMS23-018 or FAC-CYBER-09" />
+                <input type="text" id="p-id" class="fluent-input" placeholder="e.g. FSMS26-018 or FAC-CYBER-09" />
               </div>
               <div class="fluent-form-group">
                 <label for="p-email">Academic Email <span class="optional-tag">(Optional)</span></label>
@@ -2456,8 +2531,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="user-table-card">
           <div class="utc-header">
             <h3><span>📋</span> Registered Users Directory</h3>
-            <div>
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
               <span class="nav-badge" style="font-size: 0.8rem; padding: 0.3rem 0.75rem;">${userDatabase.length} Active Accounts</span>
+              <button class="btn-table-action" id="btn-export-users" title="Download User Directory as JSON file">📥 Export JSON</button>
+              <button class="btn-table-action" id="btn-reset-users-db" title="Reset User Database to Default Initial State" style="color: var(--accent-red, #d13438);">🔄 Reset DB</button>
             </div>
           </div>
 
@@ -2669,6 +2746,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+
+    const btnExportUsers = document.getElementById('btn-export-users');
+    if (btnExportUsers) {
+      btnExportUsers.addEventListener('click', () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(userDatabase, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `cyber_users_database_${new Date().toISOString().slice(0, 10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+      });
+    }
+
+    const btnResetUsersDb = document.getElementById('btn-reset-users-db');
+    if (btnResetUsersDb) {
+      btnResetUsersDb.addEventListener('click', () => {
+        if (confirm('Are you sure you want to reset the user directory to initial default accounts?')) {
+          userDatabase = JSON.parse(JSON.stringify(INITIAL_USER_DB));
+          localStorage.setItem('cyber_user_database', JSON.stringify(userDatabase));
+          updateNavUserBadge();
+          buildSidebar();
+          renderUserManagement();
+        }
+      });
+    }
   }
 
 });
